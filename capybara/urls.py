@@ -14,16 +14,27 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from django.contrib import admin
-from django.urls import path
-from django.shortcuts import render
+from django.urls import include, path
 
 
+@api_view()
 def root(request):
-    return render(request, 'hello-world.html')
+    return Response({
+        'message': 'Hello World!'
+    })
 
 
 urlpatterns = [
+    # Django
     path('admin/', admin.site.urls),
+
+    # Third-party
+    path('api-auth/', include('rest_framework.urls')),
+
+    # Local
     path('', root),
 ]
