@@ -16,6 +16,7 @@ Including another URLconf
 """
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
 
 from django.contrib import admin
 from django.urls import include, path
@@ -24,7 +25,7 @@ from django.urls import include, path
 @api_view()
 def root(request):
     return Response({
-        'message': 'Hello World!'
+        'Blog': reverse('blog:post-list', request=request)
     })
 
 
@@ -37,4 +38,5 @@ urlpatterns = [
 
     # Local
     path('', root),
+    path('blog/', include('blog.urls', namespace='blog')),
 ]
